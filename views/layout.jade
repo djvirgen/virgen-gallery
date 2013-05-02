@@ -1,0 +1,51 @@
+!!!5
+//if lt IE 7
+  html(class="ie ie6", lang="en", ng-app="virgen")
+//if IE 7
+  html(class="ie ie7", lang="en", ng-app="virgen")
+//if IE 8
+  html(class="ie ie8", lang="en", ng-app="virgen")
+//[if (gte IE 9)|!(IE)]><!
+html(lang="en", ng-app="virgen")
+  //<![endif]
+  head
+    //- Basic page needs
+    meta(charset="utf-8")
+    title VirgenTech Image Gallery
+    meta(name="description", content="")
+    meta(name="author", content="")
+
+    //- Mobile-specific metas
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1")
+
+    //- CSS
+    link(href="//fonts.googleapis.com/css?family=Open+Sans:300|Lato:400,700&v2", rel="stylesheet", type="text/css")
+    link(rel='stylesheet', href='/stylesheets/skeleton/skeleton.css')
+    link(rel='stylesheet', href='/stylesheets/skeleton/layout.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/main.css')
+
+    //- Favicons
+    link(rel="shortcut icon", href="/favicon.ico")
+    link(rel="apple-touch-icon", href="/img/apple-touch-icon.png")
+    link(rel="apple-touch-icon", sizes="72x72", href="/img/apple-touch-icon-72x72.png")
+    link(rel="apple-touch-icon", sizes="114x114", href="/img/apple-touch-icon-114x114.png")
+
+    //- Javascript
+    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js")
+    != cachify_js('/javascripts/app.min.js')
+
+  body
+    header
+      .container
+        .sixteen.columns
+          a(href="http://www.virgentech.com") Virgentech
+
+    section#content
+      .container
+        .twelve.columns
+          block content
+
+    footer
+      .container
+        .sixteen.columns Copyright 2013 <a href="http://www.virgentech.com">Virgen Technologies</a>

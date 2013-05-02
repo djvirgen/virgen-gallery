@@ -1,0 +1,142 @@
+transitionFast = 0.25s
+transitionMedium = 0.5s
+transitionSlow = 0.75s
+
+transition()
+  -moz-transition arguments
+  -webkit-transition arguments
+  -o-transition arguments
+  transition arguments
+
+transform()
+  -moz-transform arguments
+  -webkit-transform arguments
+  -o-transform arguments
+  transform arguments
+
+user-select()
+  -webkit-user-select arguments
+  -moz-user-select arguments
+  -khtml-user-select arguments
+  user-select arguments
+
+box-sizing()
+  -webkit-box-sizing arguments
+  -moz-box-sizing arguments
+  -o-box-sizing arguments
+  box-sizing arguments
+
+// Angular animations!
+.slide-enter-setup,
+.slide-leave-setup
+  -webkit-backface-visibility hidden
+  -webkit-transform-style preserve-3d
+  transition transitionSlow ease all
+
+.slide-enter-setup
+  opacity 0
+  transform translate3d(500px, 0px , 0px)
+
+.slide-enter-start
+  opacity 1
+  transform translate3d(0px, 0px , 0px)
+
+.slide-leave-setup
+  opacity 1
+  transform translate3d(0px, 0px , 0px)
+
+.slide-leave-start
+  opacity 0
+  transform translate3d(-500px, 0px , 0px)
+
+// General
+a
+  text-decoration none
+  cursor pointer
+
+#gallery
+  user-select none
+
+  div.current-image
+    text-align center
+    padding 8px
+    position relative
+
+    a.previous, a.next
+      position absolute
+      display block
+      width 120px
+      opacity 0
+      top 10px
+      bottom 15px
+      background rgba(0, 0, 0, 0.15)
+      transition transitionFast ease all
+
+      &:hover
+        opacity 1
+
+      span
+        position absolute
+        top 50%
+        left 0
+        display block
+        text-align center
+        width 100%
+        margin-top -30px
+        font-size 60px
+        font-weight bold
+        color #fff
+
+    a.previous
+      left 10px
+
+    a.next
+      right 10px
+
+    img
+      padding 8px
+      border 2px solid #ccc
+      box-shadow 0 0 8px rgba(0, 0, 0, 0.3)
+      width 100%
+      height auto
+      box-sizing border-box
+
+  ul.player-controls
+    list-style-type none
+    margin 0
+    padding 0
+    text-align center
+
+    li
+      display inline-block
+      margin 0 10px
+
+  ul.thumbs
+    list-style-type none
+    margin 0
+    padding 0
+    width 100%
+    overflow-x auto
+    overflow-y hidden
+    white-space nowrap
+
+    li
+      display inline-block
+      margin 4px
+      padding 0
+
+      img
+        padding 2px
+        border 1px solid #ccc
+        cursor pointer
+        box-shadow 0 0 3px rgba(0, 0, 0, 0.3)
+        opacity 0.8
+        transition transitionFast ease all
+
+        &:hover
+          opacity 1
+
+        &.current
+          background #39f
+          border 1px solid #aaa
+          opacity 1
