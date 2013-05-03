@@ -1,17 +1,13 @@
 #gallery
   h1 Image Gallery
 
-  div.current-image
-    a.previous(ng-click="previous()"): span &lt;
-    a.next(ng-click="next()"): span &gt;
-    img(ng-src="{{ currentImage().url }}")
+  .coverflow-container
+    ul.coverflow
+      li(ng-repeat="image in coverflowImages", ng-animate="'coverflow'", ng-class="coverflowClasses(image)")
+        img(ng-src="{{ image.url }}", ng-click="show(image.id)")
 
   ul.player-controls
-    li(ng-show="!isPlaying()"): a(ng-click="play()") Start Slideshow
-    li(ng-show="isPlaying()"): a(ng-click="stop()") Stop Slideshow
+    li(ng-show="!isPlaying()"): a(ng-click="play()") Play
+    li(ng-show="isPlaying()"): a(ng-click="stop()") Stop
     li: a(ng-click="previous()") &lt;&lt; Previous
     li: a(ng-click="next()") Next &gt;&gt;
-
-  ul.thumbs
-    li(ng-repeat="image in images", ng-animate="'slide'")
-      img(ng-src="{{ image.thumbUrl }}", ng-click="show($index)", ng-class="{ current: isCurrent($index) }")

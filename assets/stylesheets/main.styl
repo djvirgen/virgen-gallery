@@ -26,6 +26,12 @@ box-sizing()
   -o-box-sizing arguments
   box-sizing arguments
 
+perspective()
+  -webkit-perspective arguments
+  -moz-perspective arguments
+  -o-perspective arguments
+  perspective arguments
+
 // Angular animations!
 .slide-enter-setup,
 .slide-leave-setup
@@ -49,6 +55,29 @@ box-sizing()
   opacity 0
   transform translate3d(-500px, 0px , 0px)
 
+.coverflow-enter-setup,
+.coverflow-leave-setup
+  -webkit-backface-visibility hidden
+  -webkit-transform-style preserve-3d
+  transition transitionSlow ease all
+  overflow hidden
+
+.coverflow-enter-setup
+  opacity 0 !important
+  margin 0 -39% 0 !important
+
+.coverflow-enter-start
+  opacity 0.5 !important
+  margin 0 -22% !important
+
+.coverflow-leave-setup
+  opacity 0.5 !important
+  margin 0 -22% !important
+
+.coverflow-leave-start
+  opacity 0 !important
+  margin 0 -39% 0 !important
+
 // General
 a
   text-decoration none
@@ -56,6 +85,58 @@ a
 
 #gallery
   user-select none
+
+  .coverflow-container
+    height 580px
+    overflow hidden
+    background #111
+
+  ul.coverflow
+    list-style-type none
+    padding 20px 0 0
+    margin 0
+    width 100%
+    height 480px
+    overflow hidden
+    white-space nowrap
+    background #111
+    // -webkit-box-reflect below 0px -webkit-gradient(linear, left top, left bottom, from(rgba(30, 30, 30, 0.5)), to(#222))
+    -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(rgba(30,30,30,0.2)));
+
+    li
+      width 78%
+      display inline-block
+      perspective 600px
+      margin 0 -22%
+      position relative
+      z-index 1
+      opacity 1
+      transition transitionSlow ease all
+      text-align center
+
+      img
+        max-width 100%
+        max-height 100%
+        padding 4px
+        border 1px solid #ccc
+        box-sizing border-box
+        background #fff
+        box-shadow 0 0 8px rgba(0, 0, 0, 0.25)
+        transition transitionSlow ease all
+  
+      &.left
+        z-index 0
+        opacity 0.5
+  
+        img
+          transform rotateY(45deg) translateZ(-200px)
+
+      &.right
+        z-index 0
+        opacity 0.5
+  
+        img
+          transform rotateY(-45deg) translateZ(-200px)
 
   div.current-image
     text-align center
@@ -140,3 +221,24 @@ a
           background #39f
           border 1px solid #aaa
           opacity 1
+
+@media only screen and (min-width: 768px) and (max-width: 959px)
+  #gallery .coverflow-container
+    height 400px
+
+  #gallery ul.coverflow
+    height 320px
+
+@media only screen and (min-width: 480px) and (max-width: 767px)
+  #gallery .coverflow-container
+    height 280px
+
+  #gallery ul.coverflow
+    height 222px
+
+@media only screen and (max-width: 767px)
+  #gallery .coverflow-container
+    height 210px
+
+  #gallery ul.coverflow
+    height 160px
