@@ -1,14 +1,30 @@
 module = angular.module 'virgen.gallery', []
 
 # Image Gallery
+module.filter 'coverflow', ->
+  (images, index) ->
+    coverflow = []
+
+    for i in [-1..1]
+      j = index + i
+
+      if j < 0
+        j = images.length - 1
+      else if j > images.length - 1
+        j = 0
+
+      coverflow.push images[j]
+
+    return coverflow
+
 module.controller 'VirgenGalleryCtrl', ($scope, $timeout) ->
   $scope.images = []
-  $scope.coverflowImages = []
   $scope.index = 0
   $scope.playerQueue = null
 
   $scope.coverflowClasses = (image) ->
     index = $scope.images.indexOf(image)
+
     return if index == $scope.index
       'current'
     else if index == 0 and $scope.index == $scope.images.length - 1
@@ -48,24 +64,10 @@ module.controller 'VirgenGalleryCtrl', ($scope, $timeout) ->
   $scope.next = ->
     $scope.index++
     $scope.index = 0 if $scope.index >= $scope.images.length
-    $scope.coverflowImages.shift()
-    $scope.coverflowImages.push(getNextImage())
-
-  getNextImage = ->
-    i = $scope.index + 1
-    i = 0 if i >= $scope.images.length
-    $scope.images[i]
 
   $scope.previous = ->
     $scope.index--
     $scope.index = $scope.images.length - 1 if $scope.index < 0
-    $scope.coverflowImages.pop()
-    $scope.coverflowImages.unshift(getPreviousImage())
-
-  getPreviousImage = ->
-    i = $scope.index - 1
-    i = $scope.images.length - 1 if i < 0
-    $scope.images[i]
 
   $scope.play = ->
     return if $scope.playerQueue?
@@ -93,10 +95,7 @@ module.controller 'VirgenGalleryCtrl', ($scope, $timeout) ->
         url: "/images/#{i+1}.jpg"
 
     for i in [0...num]
-      image = createImage i
-      $scope.images.push image
-      $scope.coverflowImages.push image if i < 2
-      $scope.coverflowImages.unshift image if i == num - 1
+      $scope.images.push createImage i
 
   mockImages(15)
 

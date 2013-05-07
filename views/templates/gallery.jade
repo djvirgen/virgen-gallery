@@ -5,7 +5,7 @@
 
   .coverflow-container
     ul.coverflow
-      li(ng-repeat="image in coverflowImages", ng-animate="'coverflow'", ng-class="coverflowClasses(image)")
+      li(ng-repeat="image in images | coverflow:index", ng-animate="'coverflow'", ng-class="coverflowClasses(image)")
         img(ng-src="{{ image.url }}", ng-click="show(image.id)")
 
   ul.player-controls
@@ -16,4 +16,4 @@
 
   ul.thumbs
     li(ng-repeat="image in images")
-      img(ng-src="{{ image.url }}", ng-class="{ current: $index == index }", ng-click="show($index)")
+      img(ng-src="{{ image.url }}", ng-class="{ current: isCurrent($index) }", ng-click="show($index)")

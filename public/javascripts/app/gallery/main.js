@@ -3,10 +3,26 @@
 
   module = angular.module('virgen.gallery', []);
 
+  module.filter('coverflow', function() {
+    return function(images, index) {
+      var coverflow, i, j, _i;
+      coverflow = [];
+      for (i = _i = -1; _i <= 1; i = ++_i) {
+        j = index + i;
+        if (j < 0) {
+          j = images.length - 1;
+        } else if (j > images.length - 1) {
+          j = 0;
+        }
+        coverflow.push(images[j]);
+      }
+      return coverflow;
+    };
+  });
+
   module.controller('VirgenGalleryCtrl', function($scope, $timeout) {
-    var getNextImage, getPreviousImage, mockImages;
+    var mockImages;
     $scope.images = [];
-    $scope.coverflowImages = [];
     $scope.index = 0;
     $scope.playerQueue = null;
     $scope.coverflowClasses = function(image) {
@@ -52,34 +68,14 @@
     $scope.next = function() {
       $scope.index++;
       if ($scope.index >= $scope.images.length) {
-        $scope.index = 0;
+        return $scope.index = 0;
       }
-      $scope.coverflowImages.shift();
-      return $scope.coverflowImages.push(getNextImage());
-    };
-    getNextImage = function() {
-      var i;
-      i = $scope.index + 1;
-      if (i >= $scope.images.length) {
-        i = 0;
-      }
-      return $scope.images[i];
     };
     $scope.previous = function() {
       $scope.index--;
       if ($scope.index < 0) {
-        $scope.index = $scope.images.length - 1;
+        return $scope.index = $scope.images.length - 1;
       }
-      $scope.coverflowImages.pop();
-      return $scope.coverflowImages.unshift(getPreviousImage());
-    };
-    getPreviousImage = function() {
-      var i;
-      i = $scope.index - 1;
-      if (i < 0) {
-        i = $scope.images.length - 1;
-      }
-      return $scope.images[i];
     };
     $scope.play = function() {
       var enqueue;
@@ -105,7 +101,7 @@
       return $scope.playerQueue != null;
     };
     mockImages = function(num) {
-      var createImage, i, image, _i, _results;
+      var createImage, i, _i, _results;
       createImage = function(i) {
         var image, text;
         text = "mock+" + i;
@@ -117,16 +113,7 @@
       };
       _results = [];
       for (i = _i = 0; 0 <= num ? _i < num : _i > num; i = 0 <= num ? ++_i : --_i) {
-        image = createImage(i);
-        $scope.images.push(image);
-        if (i < 2) {
-          $scope.coverflowImages.push(image);
-        }
-        if (i === num - 1) {
-          _results.push($scope.coverflowImages.unshift(image));
-        } else {
-          _results.push(void 0);
-        }
+        _results.push($scope.images.push(createImage(i)));
       }
       return _results;
     };
