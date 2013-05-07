@@ -13,3 +13,7 @@
     li(ng-show="isPlaying()"): a(ng-click="stop()") Stop
     li: a(ng-click="previous()") &lt;&lt; Previous
     li: a(ng-click="next()") Next &gt;&gt;
+
+  ul.thumbs
+    li(ng-repeat="image in images")
+      img(ng-src="{{ image.url }}", ng-class="{ current: $index == index }", ng-click="show($index)")

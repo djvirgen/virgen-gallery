@@ -111,7 +111,7 @@
         text = "mock+" + i;
         return image = {
           id: i,
-          thumbUrl: "/images/" + (i + 1) + ".jpg",
+          thumbUrl: "/images/thumbs/" + (i + 1) + ".jpg",
           url: "/images/" + (i + 1) + ".jpg"
         };
       };
