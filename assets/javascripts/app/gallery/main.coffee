@@ -3,19 +3,12 @@ module = angular.module 'virgen.gallery', []
 # Image Gallery
 module.filter 'coverflow', ->
   (images, index) ->
-    coverflow = []
-
-    for i in [-1..1]
-      j = index + i
-
-      if j < 0
-        j = images.length - 1
-      else if j > images.length - 1
-        j = 0
-
-      coverflow.push images[j]
-
-    return coverflow
+    return if index == 0
+      images.slice(-1).concat(images.slice(0, 2))
+    else if index == images.length - 1
+      images.slice(-2).concat([images[0]])
+    else
+      images.slice(index - 1, index + 2)
 
 module.controller 'VirgenGalleryCtrl', ($scope, $timeout) ->
   $scope.images = []

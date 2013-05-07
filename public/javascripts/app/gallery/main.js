@@ -5,18 +5,13 @@
 
   module.filter('coverflow', function() {
     return function(images, index) {
-      var coverflow, i, j, _i;
-      coverflow = [];
-      for (i = _i = -1; _i <= 1; i = ++_i) {
-        j = index + i;
-        if (j < 0) {
-          j = images.length - 1;
-        } else if (j > images.length - 1) {
-          j = 0;
-        }
-        coverflow.push(images[j]);
+      if (index === 0) {
+        return images.slice(-1).concat(images.slice(0, 2));
+      } else if (index === images.length - 1) {
+        return images.slice(-2).concat([images[0]]);
+      } else {
+        return images.slice(index - 1, index + 2);
       }
-      return coverflow;
     };
   });
 
